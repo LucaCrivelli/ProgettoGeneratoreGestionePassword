@@ -1,0 +1,7 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam classAttibuteIconSize 0
+
+
+@enduml
