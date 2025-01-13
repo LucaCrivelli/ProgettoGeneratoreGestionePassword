@@ -3,5 +3,16 @@
 
 skinparam classAttibuteIconSize 0
 
+class InserirePassword{
+
+}
+
+class ControlloAccount{
+
+}
+
+class GeneratorePassword{
+
+}
 
 @enduml
