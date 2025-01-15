@@ -97,38 +97,43 @@ public class Program {
                     ControlloAccount c1 = new ControlloAccount(nome, percorso);
                     InserirePassword i1 = new InserirePassword(nome, password, percorso);
                     int controllo1 = c1.controlloNome();
-                    int controllo2 = c1.controlloPassword(password);
-                    if (controllo1 == 0 && controllo2 == 1) {
-                        i1.inserire();
-                        selezionato4 = true;
-                    } else {
-                        System.out.println("Sei sicuro di voler inserire questa password?");
-                        while (selezionato5 == false) {
-                            System.out.print("Selezionare 1 per continuare o 2 per reinserire o 3 per uscire: ");
-                            try {
-                                option3 = sc.nextInt();
-                                if (option > 3 || option < 1) {
-                                    System.out.println("Errore: seleziona una delle tre opzioni");
-                                    sc.nextLine();
-                                } else {
-                                    selezionato5 = true;
-                                    sc.nextLine();
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Errore: " + e.getMessage());
-                                sc.nextLine();
-                            }
-                        }
-                        if(option3 == 1){
+                    if (controllo1 == 0) {
+                        int controllo2 = c1.controlloPassword(password);
+                        if (controllo2 == 1) {
                             i1.inserire();
                             selezionato4 = true;
+                        } else {
+                            System.out.println("Sei sicuro di voler inserire questa password?");
+                            while (selezionato5 == false) {
+                                System.out.print("Selezionare 1 per continuare o 2 per reinserire o 3 per uscire: ");
+                                try {
+                                    option3 = sc.nextInt();
+                                    if (option > 3 || option < 1) {
+                                        System.out.println("Errore: seleziona una delle tre opzioni");
+                                        sc.nextLine();
+                                    } else {
+                                        selezionato5 = true;
+                                        sc.nextLine();
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Errore: " + e.getMessage());
+                                    sc.nextLine();
+                                }
+                            }
+                            if (option3 == 1) {
+                                i1.inserire();
+                                selezionato4 = true;
+                            }
+                            if (option3 == 2) {
+                                selezionato5 = false;
+                            }
+                            if (option3 == 3) {
+                                selezionato4 = true;
+                            }
                         }
-                        if(option3 == 2){
-                            selezionato5 = false;
-                        }
-                        if(option3 == 3){
-                            selezionato4 = true;
-                        }
+                    }
+                    else{
+                        selezionato4 = true;
                     }
                 }
             }
