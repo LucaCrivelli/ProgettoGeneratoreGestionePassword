@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.HashSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,14 +21,15 @@ public class Program {
         boolean selezionato5 = false;
         boolean selezionato0 = true;
         boolean trovato = false;
-        Path pathD = Paths.get("../password/discord.txt");
-        Path pathG = Paths.get("../password/gmail.txt");
-        Path pathI = Paths.get("../password/infomaniak.txt");
-        Path pathMi = Paths.get("../password/microsoft.txt");
-        Path pathMo = Paths.get("../password/moodle.txt");
-        Path pathN = Paths.get("../password/nvidia.txt");
-        Path pathS = Paths.get("../password/steam.txt");
-        Path pathA = Paths.get("../password/altro.txt");
+        //con intellij bisodna aprire la cartella(del progetto) contenete la cartella src e password altrimenti questi percorsi non vanno
+        Path pathD = Paths.get("password/discord.txt");
+        Path pathG = Paths.get("password/gmail.txt");
+        Path pathI = Paths.get("password/infomaniak.txt");
+        Path pathMi = Paths.get("password/microsoft.txt");
+        Path pathMo = Paths.get("password/moodle.txt");
+        Path pathN = Paths.get("password/nvidia.txt");
+        Path pathS = Paths.get("password/steam.txt");
+        Path pathA = Paths.get("password/altro.txt");
         Path percorso = pathA;
         int option = 0;
         int option2 = 0;
