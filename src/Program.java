@@ -7,6 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
+/*
+ *Il programma serve memorizzare account con password inserite o generate
+ *
+ * @author Luca Crivelli
+ * @versions 16.01.2025
+ */
+
 public class Program {
     public static void main(String[] args) {
         boolean selezionato1 = false;
@@ -177,7 +184,7 @@ public class Program {
                 System.out.print("Se vuoi continuare premere 1 se vuoi uscire premere 2: ");
                 try {
                     option = sc.nextInt();
-                    if (option > 3 || option < 1) {
+                    if (option > 2 || option < 1) {
                         System.out.println("Errore: seleziona una delle tre opzioni");
                         sc.nextLine();
                     } else {
