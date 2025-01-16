@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 
 /*
- *Il programma serve memorizzare account con password inserite o generate
+ *Il programma serve a memorizzare nomi di account con password inserite o generate
  *
  * @author Luca Crivelli
  * @versions 16.01.2025
@@ -34,6 +34,7 @@ public class Program {
         int option = 0;
         int option2 = 0;
         int option3 = 0;
+        int tipo = 0;
         Scanner sc = new Scanner(System.in);
 
         while(selezionato0 == true) {
@@ -72,27 +73,35 @@ public class Program {
             }
             if(option2 == 1){
                 percorso = pathD;
+                tipo = 1;
             }
             else if(option2 == 2){
                 percorso = pathG;
+                tipo = 2;
             }
             else if(option2 == 3){
                 percorso = pathI;
+                tipo = 3;
             }
             else if(option2 == 4){
                 percorso = pathMi;
+                tipo = 4;
             }
             else if(option2 == 5){
                 percorso = pathMo;
+                tipo = 5;
             }
             else if(option2 == 6){
                 percorso = pathN;
+                tipo = 6;
             }
             else if(option2 == 7){
                 percorso = pathS;
+                tipo = 7;
             }
             else if(option2 == 8){
                 percorso = pathA;
+                tipo = 8;
             }
             if (option == 1) {
                 while(selezionato4 == false) {
@@ -102,11 +111,11 @@ public class Program {
                     String password = sc.nextLine();
                     ControlloAccount c1 = new ControlloAccount(nome, percorso);
                     InserirePassword i1 = new InserirePassword(nome, password, percorso);
-                    int controllo1 = c1.controlloNome();
+                    int controllo1 = c1.controlloNome(tipo);
                     if (controllo1 == 0) {
                         int controllo2 = c1.controlloPassword(password);
                         if (controllo2 == 1) {
-                            i1.inserire();
+                            i1.inserire(tipo);
                             selezionato4 = true;
                         } else {
                             System.out.println("Sei sicuro di voler inserire questa password?");
@@ -127,7 +136,7 @@ public class Program {
                                 }
                             }
                             if (option3 == 1) {
-                                i1.inserire();
+                                i1.inserire(tipo);
                                 selezionato4 = true;
                             }
                             if (option3 == 2) {
@@ -149,33 +158,69 @@ public class Program {
                 String nome = sc.nextLine();
                 ControlloAccount c1 = new ControlloAccount(nome, percorso);
                 GeneratorePassword p1 = new GeneratorePassword(nome, percorso);
-                int c = c1.controlloNome();
+                int c = c1.controlloNome(tipo);
                 if(c == 0) {
-                    p1.generaPassword();
+                    p1.generaPassword(tipo);
                 }
             }
 
             else if (option == 3) {
-                System.out.print("Inserisci il nome dell'account: ");
-                String nome = sc.nextLine();
-                try {
-                    List<String> list = Files.readAllLines(percorso);
-                    for(String line : list){
-                        String[] parole = line.split(",");
-                        if(parole[0].equals(nome)){
-                            System.out.println("La password dell'account "+ parole[0] + " è: " + parole[1]);
-                            trovato = true;
-                            break;
+                if(tipo != 8) {
+                    System.out.print("Inserisci il nome dell'account: ");
+                    String nome = sc.nextLine();
+                    try {
+                        List<String> list = Files.readAllLines(percorso);
+                        for (String line : list) {
+                            String[] parole = line.split(",");
+                            if (parole[0].equals(nome)) {
+                                System.out.println("La password dell'account " + parole[0] + " è: " + parole[1]);
+                                trovato = true;
+                                break;
+                            }
                         }
+                        if (trovato == false) {
+                            System.out.println("Errore: account non trovato");
+                        } else {
+                            trovato = false;
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Errore: " + e.getMessage());
                     }
-                    if (trovato == false){
-                        System.out.println("Errore: accaount non trovato");
+                }
+                else{
+                    System.out.print("Inserisci il nome dell'account: ");
+                    String nome = sc.nextLine();
+                    System.out.print("Inserisci il tuo codice: ");
+                    String  codice = sc.nextLine();
+                    int corretto = 0;
+                    try {
+                        List<String> list = Files.readAllLines(percorso);
+                        for (String line : list) {
+                            String[] parole = line.split(",");
+                            if (parole[0].equals(nome)) {
+                                for(int i = 0; i < parole[2].length(); i++){
+                                    if(codice.charAt(i) == parole[2].charAt(i)){
+                                        corretto += 1;
+                                    }
+                                }
+                                if(corretto == parole[2].length()){
+                                    System.out.println("La password dell'account " + parole[0] + " è: " + parole[1]);
+                                    trovato = true;
+                                    break;
+                                }
+                                else{
+                                    corretto = 0;
+                                }
+                            }
+                        }
+                        if (trovato == false) {
+                            System.out.println("Errore: account non trovato");
+                        } else {
+                            trovato = false;
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Errore: " + e.getMessage());
                     }
-                    else{
-                        trovato = false;
-                    }
-                }catch (IOException e){
-                    System.out.println("Errore: " + e.getMessage());
                 }
             }
 
@@ -204,6 +249,7 @@ public class Program {
                 selezionato3 = false;
                 selezionato4 = false;
                 selezionato5 = false;
+                tipo = 0;
             }
             else if (option == 2) {
                 selezionato0 =false;

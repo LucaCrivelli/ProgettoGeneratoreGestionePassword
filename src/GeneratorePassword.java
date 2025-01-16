@@ -18,7 +18,7 @@ public class GeneratorePassword {
         this.percorso = percorso;
     }
 
-    public void generaPassword() {
+    public void generaPassword(int tipo) {
         Random r = new Random();
         int n = 0;
         boolean lm = false;
@@ -26,6 +26,10 @@ public class GeneratorePassword {
         boolean num = false;
         boolean speciali = false;
         boolean corretta = false;
+
+        int quantita = 0;
+        int n2 = 0;
+        boolean vuota = false;
         while (corretta == false) {
             password = new StringBuilder();
             for (int i = 0; i < 4; i++) {
@@ -65,13 +69,47 @@ public class GeneratorePassword {
                 speciali=false;
             }
         }
-        List<String> lines = new ArrayList<>();
-        lines.add(nomeAccount+ ","+ password.toString());
-        try {
-            Files.write(percorso, lines, StandardOpenOption.APPEND);
-        } catch (IOException ex) {
-            System.out.println("Errore scrittura!");
+        if(tipo == 8) {
+            try {
+                List<String> list = Files.readAllLines(percorso);
+                if(list.isEmpty()){
+                    vuota = true;
+                }
+                else {
+                    for (String line : list) {
+                        String[] parole = line.split(",");
+                        if (parole[0].equals(nomeAccount)) {
+                            quantita += 1;
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Errore: " + e.getMessage());
+            }
+            if(vuota == false) {
+                Random r2 = new Random();
+                n2 = r.nextInt(0, 100);
+                String codiceId = String.valueOf(quantita) + String.valueOf(n2);
+                List<String> lines = new ArrayList<>();
+                lines.add(nomeAccount + "," + password.toString() + "," + codiceId);
+                try {
+                    Files.write(percorso, lines, StandardOpenOption.APPEND);
+                } catch (IOException ex) {
+                    System.out.println("Errore scrittura!");
+                }
+                System.out.println("La password per il tuo account è: " + password);
+                System.out.println("Attenzione: per ritrovare il tuo account usare il codice: " + codiceId);
+            }
         }
-        System.out.println("La password per il tuo account è: " + password);
+        if(tipo != 8 || vuota == true) {
+            List<String> lines = new ArrayList<>();
+            lines.add(nomeAccount + "," + password.toString());
+            try {
+                Files.write(percorso, lines, StandardOpenOption.APPEND);
+            } catch (IOException ex) {
+                System.out.println("Errore scrittura!");
+            }
+            System.out.println("La password per il tuo account è: " + password);
+        }
     }
 }

@@ -18,8 +18,8 @@ public class ControlloAccount {
         this.percorso = percorso;
     }
 
-    public int controlloNome(){
-        int c = 0;
+    public int controlloNome(int tipo){
+        int c = 0; //c = controllo
         boolean cSpazi = false;
         for(int i = 0; i < nomeAccount.length(); i ++){
             if(nomeAccount.charAt(i) == spazio.charAt(0)){
@@ -29,19 +29,21 @@ public class ControlloAccount {
             }
         }
         if(cSpazi == false) {
-            try {
-                List<String> list = Files.readAllLines(percorso);
-                if (!list.isEmpty()) {
-                    for (String line : list) {
-                        String[] parole = line.split(",");
-                        if (parole[0].equals(nomeAccount)) {
-                            System.out.println("Account " + parole[0] + " è già esistente ");
-                            c = 1;
+            if(tipo != 8) {
+                try {
+                    List<String> list = Files.readAllLines(percorso);
+                    if (!list.isEmpty()) {
+                        for (String line : list) {
+                            String[] parole = line.split(",");
+                            if (parole[0].equals(nomeAccount)) {
+                                System.out.println("Account " + parole[0] + " è già esistente ");
+                                c = 1;
+                            }
                         }
                     }
+                } catch (IOException e) {
+                    System.out.println("Errore: " + e.getMessage());
                 }
-            } catch (IOException e) {
-                System.out.println("Errore: " + e.getMessage());
             }
         }
         return c;
